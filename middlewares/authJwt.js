@@ -8,13 +8,21 @@ const verifyToken = (req, res, next) => {
         console.log("TOken : ", token)
 
         if (!token || token == null || token.trim() == "") {
-            return res.status(403).send({ status: 403, message: "Invalid token. Authentication failed", res });
+            console.log("Pasds.............")
+            res.status(403).json({
+                status: 403,
+                message: "Invalid token. Authentication failed"
+            });
+            return
         }
 
         jwt.verify(token, authKey, (err, decoded) => {
 
             if (err) {
-                return res.status(401).send({ status: 401, message: "Unauthorised", res });
+                res.status(401).send({
+                    status: 401, message: "Unauthorised"
+                });
+                return
             }
 
             console.log("Decoded id: ", decoded.userId)
